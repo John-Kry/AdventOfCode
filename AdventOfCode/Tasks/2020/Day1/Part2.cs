@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AdventOfCode.Tasks.Year2020.Day1
 {
@@ -13,17 +12,17 @@ namespace AdventOfCode.Tasks.Year2020.Day1
             var compliments = new HashSet<int>();
             foreach (string number in numbers)
             {
-                var actualNumber = Int32.Parse(number);
-                foreach(string number in numbers)
+		foreach (string number2 in numbers){
+                var actualNumber1 = Int32.Parse(number);
+                var actualNumber2 = Int32.Parse(number2);
+		var compliment = 2020 - actualNumber1 - actualNumber2;		
+                if (compliments.Contains(compliment))
                 {
-
+                    return actualNumber2 * actualNumber1 * compliment;
                 }
-                var compliment = 2020 - actualNumber;
-                if (compliments.Contains(actualNumber))
-                {
-                    return actualNumber * compliment;
-                }
-                compliments.Add(compliment);
+		compliments.Add(actualNumber1);
+		compliments.Add(actualNumber2);
+		}
             }
             return 10;
         }
