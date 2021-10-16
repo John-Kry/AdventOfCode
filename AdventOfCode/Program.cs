@@ -12,7 +12,7 @@ namespace AdventOfCode
         {
             var year = 2020;
             var day = 2;
-            var part = 1;
+            var part = 2;
             Type taskType = Type.GetType($"AdventOfCode.Tasks.Year{year}.Day{day}.Part{part}");
             if (taskType is null)
             {
