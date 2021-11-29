@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AdventOfCode.Tasks.Year2020.Day1
 {
@@ -14,7 +13,7 @@ namespace AdventOfCode.Tasks.Year2020.Day1
             foreach (string number in numbers)
             {
                 var actualNumber = Int32.Parse(number);
-                var compliment = 2020 - actualNumber;
+		var compliment = 2020 - actualNumber;
                 if (compliments.Contains(actualNumber))
                 {
                     return actualNumber * compliment;
