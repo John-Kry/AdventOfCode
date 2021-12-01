@@ -1,63 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace AdventOfCode.Tasks.Year2020.Day18
+using System.Linq;
+
+namespace AdventOfCode.Tasks.Year2020.Day19
 {
-    public class Part1 : ITask<long>
+    public partial class Part1 : ITask<long>
     {
-        private Stack<char> stack = new Stack<char>();
         private string postfix;
-        public long Solution(string input)
+        public long Solution(string solInput)
         {
-            var equations = input.Split("\n");
-            Console.WriteLine(equations[0]);
-            var sum = 0L;
-            foreach (var equation in equations){
-                var value = Evaluate(equation.Replace(" ", string.Empty));
-                Console.WriteLine(value);
-                sum += value;
-            }
-            return sum;
-        }
-        private long Evaluate(string equation){
-            foreach(char c in equation){
-                if(char.IsDigit(c)){
-                    postfix+=c;
-                } else if (c == '('){
-                    stack.Push('(');
-                } else if (c == ')'){
-                    while(stack.Count > 0 && stack.Peek() != '('){
-                        postfix+= stack.Pop();
-                    }
-                    stack.TryPop(out _);
-                } else {
-                    while(stack.Count > 0 && Precedent(c) <= Precedent(stack.Peek())){
-                        postfix += stack.Pop();
-                    }
-                    stack.Push(c);
+            var sections =  solInput.Split("\r\n\r\n");
+            var possibilites = sections[1];
+            var messages = new List<string>();
+            var inputs     = sections[0].Split("\r\n");
+            foreach (string input in inputs)
+            {
+                string[] bits = input.Split(new char[] { ':', '|' });
+                if (bits.Length == 1)
+                {
+                    messages.Add(bits[0]);
                 }
-            }
-            while(stack.Count >0){
-                postfix+=stack.Pop();
-            }
-            Console.WriteLine(postfix);
-            Stack<long> expressionStack = new Stack<long>();
-            foreach (char c in postfix){
-                if(char.IsDigit(c)){
-                    expressionStack.Push((long) char.GetNumericValue(c));
-                }
-                else {
-                    var a = expressionStack.Pop();
-                    var b = expressionStack.Pop();
-                    if(c == '+'){
-                        expressionStack.Push(a+b);
-                    }
-                    if(c == '*'){
-                        expressionStack.Push(a * b);
+                else
+                {
+                    int ruleNumber = int.Parse(bits[0]);
+                    string rule1 = bits[1];
+                    if (bits.Length == 2)
+                    {
+                        if (!rule1.Any(char.IsDigit))
+                        {
+                            
+                        }
                     }
                 }
             }
-            // 26
-            return expressionStack.Pop();
+            List<(int, List<string>)> unresolved = new List<(int, List<string>)>();
+            Queue<(int, List<string>)> resolved = new Queue<(int, List<string>)>();
+            
+
+            return 0;
         }
         private int Precedent(char c){
             if (c == '+' || c == '*')

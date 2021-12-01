@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace AdventOfCode.Tasks.Year2020.Day18
 {
-    public class Part1 : ITask<long>
+    public partial class Part1 : ITask<long>
     {
         private Stack<char> stack = new Stack<char>();
         private string postfix;
