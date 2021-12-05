@@ -11,7 +11,7 @@ namespace AdventOfCode
         static void Main(string[] args)
         {
             var year = 2021;
-            var day = 04;
+            var day = 05;
             var part = 2;
             Type taskType = Type.GetType($"AdventOfCode.Tasks.Year{year}.Day{day}.Part{part}");
             if (taskType is null)
