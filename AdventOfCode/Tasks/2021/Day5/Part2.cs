@@ -7,9 +7,10 @@ namespace AdventOfCode.Tasks.Year2021.Day5
 {
     public class Part2 : ITask<int>
     {
-        Dictionary<(int,int),int> _positions = new Dictionary<(int,int), int>();
+        Dictionary<(int, int), int> _positions = new Dictionary<(int, int), int>();
         private int _maxX = 0;
         private int _maxY = 0;
+
         public int Solution(string input)
         {
             var inputLines = input.Split("\n");
@@ -37,18 +38,22 @@ namespace AdventOfCode.Tasks.Year2021.Day5
                 {
                     _maxX = lastLine.endPosition.x;
                 }
+
                 if (lastLine.startPosition.x > _maxX)
                 {
                     _maxX = lastLine.startPosition.x;
                 }
+
                 if (lastLine.startPosition.y > _maxY)
                 {
                     _maxY = lastLine.startPosition.y;
                 }
+
                 if (lastLine.endPosition.y > _maxY)
                 {
                     _maxY = lastLine.endPosition.y;
                 }
+
                 Console.WriteLine(lines.Last());
             }
 
@@ -71,7 +76,7 @@ namespace AdventOfCode.Tasks.Year2021.Day5
                         {
                             IncrementPosition(new Position
                             {
-                                x= line.startPosition.x + i,
+                                x = line.startPosition.x + i,
                                 y = line.startPosition.y - i
                             });
                         }
@@ -82,32 +87,34 @@ namespace AdventOfCode.Tasks.Year2021.Day5
                         {
                             IncrementPosition(new Position
                             {
-                                x= line.startPosition.x + i,
+                                x = line.startPosition.x + i,
                                 y = line.startPosition.y + i
                             });
-                        } 
+                        }
                     }
                 }
+
                 // horizontal
                 if (line.startPosition.x == line.endPosition.x)
                 {
                     var start = Math.Min(line.endPosition.y, line.startPosition.y);
-                    for (var i =0 ; i <= Math.Abs(line.endPosition.y - line.startPosition.y); i++)
+                    for (var i = 0; i <= Math.Abs(line.endPosition.y - line.startPosition.y); i++)
                     {
-                        IncrementPosition(new Position {x = line.startPosition.x, y = start +i});
+                        IncrementPosition(new Position {x = line.startPosition.x, y = start + i});
                     }
                 }
+
                 // vertical
                 if (line.startPosition.y == line.endPosition.y)
                 {
                     var start = Math.Min(line.endPosition.x, line.startPosition.x);
-                    for (var i = 0; i <= Math.Abs(line.endPosition.x -line.startPosition.x); i++)
+                    for (var i = 0; i <= Math.Abs(line.endPosition.x - line.startPosition.x); i++)
                     {
                         IncrementPosition(new Position {x = start + i, y = line.startPosition.y});
-                    } 
+                    }
                 }
             }
-           
+
             PrintPositions();
 
             return CountDangerousAreas();
@@ -123,6 +130,7 @@ namespace AdventOfCode.Tasks.Year2021.Day5
                     _positions.TryGetValue((x, y), out number);
                     Console.Write(number);
                 }
+
                 Console.Write("\n");
             }
         }
@@ -152,6 +160,7 @@ namespace AdventOfCode.Tasks.Year2021.Day5
                 _positions[position.toTuple()] = 1;
             }
         }
+
         class Position
         {
             public int x;
