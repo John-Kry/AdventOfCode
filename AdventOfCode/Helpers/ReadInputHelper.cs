@@ -5,7 +5,20 @@ namespace AdventOfCode.Helpers
 {
     static class ReadInputHelper
     {
-        public static string ReadTaskInput(int year, int day)
+        public static string ReadTaskInput(int year, int day, string fileName)
+        {
+            var projectRoot = GetProjectRoot();
+
+            string input = File.ReadAllText(Path.Combine(projectRoot, $"Tasks/{year}/Day{day}/{fileName}"));
+            input = input.TrimEnd();
+            return input;
+        }
+
+        public static bool FileExists(int year, int day, string fileName)
+        {
+           return File.Exists(Path.Combine(GetProjectRoot(), $"Tasks/{year}/Day{day}/{fileName}"));
+        }
+        private static string GetProjectRoot()
         {
             string baseDirectory = AppContext.BaseDirectory;
 
@@ -17,9 +30,8 @@ namespace AdventOfCode.Helpers
             {
                 projectRoot = baseDirectory.Substring(0, index);
             }
-            string input = File.ReadAllText(Path.Combine(projectRoot, $"Tasks/{year}/Day{day}/input.txt"));
-            input = input.TrimEnd();
-            return input;
-        }   
+
+            return projectRoot;
+        }
     }
 }

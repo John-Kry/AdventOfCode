@@ -78,7 +78,7 @@ namespace AdventOfCode.Tasks.Year2021.Day5
                 }
             }
            
-            PrintPositions();
+            // PrintPositions();
 
             return CountDangerousAreas();
         }

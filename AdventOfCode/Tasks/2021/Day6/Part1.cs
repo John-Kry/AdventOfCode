@@ -17,7 +17,6 @@ namespace AdventOfCode.Tasks.Year2021.Day6
             }
             for (var i = 0; i < 80; i++)
             {
-                Console.WriteLine($"Day: {i}");
                 var count = _fishies.Count;
                 for (var j = 0; j < count; j++)
                 {
