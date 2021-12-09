@@ -9,7 +9,7 @@ namespace AdventOfCode
     class Program
     {
         private static int _year = 2021;
-        private static int _day = 08;
+        private static int _day = 09;
 
         static void Main(string[] args)
         {
