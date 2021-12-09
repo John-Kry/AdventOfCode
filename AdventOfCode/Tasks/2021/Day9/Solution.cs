@@ -13,7 +13,7 @@ namespace AdventOfCode.Tasks.Year2021.Day9
             var heightMap = GetHeightMap(lines);
 
             var points = FindLowPoints(heightMap);
-            return points.Select(point =>point.value).Sum();
+            return points.Select(point => point.value + 1).Sum();
         }
 
         private static Point[,] GetHeightMap(string[] lines)
@@ -60,6 +60,7 @@ namespace AdventOfCode.Tasks.Year2021.Day9
 
             return lowPoints;
         }
+
         private int GetPoint(int x, int y, Point[,] heightMap)
         {
             if (x > heightMap.GetUpperBound(0) || x < heightMap.GetLowerBound(0) ||
@@ -90,16 +91,16 @@ namespace AdventOfCode.Tasks.Year2021.Day9
             {
                 var lines = input.Split("\n");
                 var heightMap = GetHeightMap(lines);
-                
+
                 var points = FindLowPoints(heightMap);
 
                 var basins = new List<int>();
                 foreach (var point in points)
                 {
-                    basins.Add(FindBasinLength(point.x, point.y, heightMap, heightMap[point.x, point.y].value-1));
+                    basins.Add(FindBasinLength(point.x, point.y, heightMap, heightMap[point.x, point.y].value - 1));
                 }
-                
-                return basins.OrderByDescending(a=>a).Take(3).Aggregate(1, (a,b)=>a*b);
+
+                return basins.OrderByDescending(a => a).Take(3).Aggregate(1, (a, b) => a * b);
             }
         }
 
@@ -136,6 +137,7 @@ namespace AdventOfCode.Tasks.Year2021.Day9
                    FindBasinLength(x, y - 1, heightMap, heightMap[x, y].value) +
                    FindBasinLength(x, y + 1, heightMap, heightMap[x, y].value) + 1;
         }
+
         private Point GetLowPoint(int x, int y, Point[,] heightMap)
         {
             var target = heightMap[x, y];
@@ -150,10 +152,9 @@ namespace AdventOfCode.Tasks.Year2021.Day9
             //down 
             points.Add(GetPoint(x, y + 1, heightMap));
             var count = points.Count(item => target.value < item);
-            if (count == 4) return heightMap[x,y];
+            if (count == 4) return heightMap[x, y];
             return null;
         }
-
     }
 
     class Point
