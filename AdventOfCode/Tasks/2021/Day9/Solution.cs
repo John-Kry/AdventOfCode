@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualBasic;
 
 namespace AdventOfCode.Tasks.Year2021.Day9
 {
@@ -97,71 +96,75 @@ namespace AdventOfCode.Tasks.Year2021.Day9
                 var basins = new List<int>();
                 foreach (var point in points)
                 {
-                    basins.Add(FindBasinLength(point.x, point.y, heightMap, heightMap[point.x, point.y].value - 1));
+                    basins.Add(FindBasinLength(point.x, point.y, heightMap));
                 }
 
                 return basins.OrderByDescending(a => a).Take(3).Aggregate(1, (a, b) => a * b);
             }
         }
 
-        private int FindBasinLength(int x, int y, Point[,] heightMap, int target)
+        private int FindBasinLength(int x, int y, Point[,] heightMap)
         {
-            if (x > heightMap.GetUpperBound(0) || x < heightMap.GetLowerBound(0) ||
-                y > heightMap.GetUpperBound(1) || y < heightMap.GetLowerBound(1))
+            var size = 0;
+            var queue = new Queue<Point>();
+
+            queue.Enqueue(heightMap[x, y]);
+
+            while (queue.Count > 0)
             {
-                return 0;
+                var currPoint = queue.Dequeue();
+                if (currPoint.seen)
+                {
+                    continue;
+                }
+
+                currPoint.seen = true;
+                size += 1;
+                var dirRow = new int[] {-1, 0, 1, 0};
+                var dirCol = new int[] {0, 1, 0, -1};
+                foreach (int val in Enumerable.Range(0, 4))
+                {
+                    var tempX = dirCol[val] + currPoint.x;
+                    var tempY = dirRow[val] + currPoint.y;
+                    if (tempX > heightMap.GetUpperBound(0) || tempX < heightMap.GetLowerBound(0) ||
+                        tempY > heightMap.GetUpperBound(1) || tempY < heightMap.GetLowerBound(1))
+                    {
+                        continue;
+                    }
+                    if (heightMap[tempX, tempY].value != 9)
+                    {
+                        queue.Enqueue(heightMap[tempX, tempY]);
+                    }
+                }
             }
 
-            if (heightMap[x, y].value == 9)
-            {
-                return 0;
-            }
-
-            if (heightMap[x, y].seen)
-            {
-                return 0;
-            }
-
-            if (heightMap[x, y].value <= target)
-            {
-                return 0;
-            }
-
-            if (heightMap[x, y].value > target)
-            {
-                heightMap[x, y].seen = true;
-            }
-
-            return FindBasinLength(x - 1, y, heightMap, heightMap[x, y].value) +
-                   FindBasinLength(x + 1, y, heightMap, heightMap[x, y].value) +
-                   FindBasinLength(x, y - 1, heightMap, heightMap[x, y].value) +
-                   FindBasinLength(x, y + 1, heightMap, heightMap[x, y].value) + 1;
+            return size;
         }
 
         private Point GetLowPoint(int x, int y, Point[,] heightMap)
-        {
-            var target = heightMap[x, y];
-            var points = new List<int>();
+            {
+                var target = heightMap[x, y];
+                var points = new List<int>();
 
-            //left
-            points.Add(GetPoint(x - 1, y, heightMap));
-            //right
-            points.Add(GetPoint(x + 1, y, heightMap));
-            //up
-            points.Add(GetPoint(x, y - 1, heightMap));
-            //down 
-            points.Add(GetPoint(x, y + 1, heightMap));
-            var count = points.Count(item => target.value < item);
-            if (count == 4) return heightMap[x, y];
-            return null;
+                //left
+                points.Add(GetPoint(x - 1, y, heightMap));
+                //right
+                points.Add(GetPoint(x + 1, y, heightMap));
+                //up
+                points.Add(GetPoint(x, y - 1, heightMap));
+                //down 
+                points.Add(GetPoint(x, y + 1, heightMap));
+                var count = points.Count(item => target.value < item);
+                if (count == 4) return heightMap[x, y];
+                return null;
+            }
+        }
+
+        class Point
+        {
+            public bool seen;
+            public int value;
+            public int x;
+            public int y;
         }
     }
-
-    class Point
-    {
-        public bool seen;
-        public int value;
-        public int x;
-        public int y;
-    }
-}
