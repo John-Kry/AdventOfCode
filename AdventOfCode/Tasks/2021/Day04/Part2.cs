@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Tasks.Year2021.Day4
+namespace AdventOfCode.Tasks.Year2021.Day04
 {
-    public class Part1 : ITask<int>
+    public class Part2 : ITask<int>
     {
         public int Solution(string input)
         {
@@ -49,11 +49,11 @@ namespace AdventOfCode.Tasks.Year2021.Day4
             game.Initialize(cardsRaw);
             foreach (var winningNumber in winningNumbers)
             {
-                var (isWin, answer) = game.MarkWinner(winningNumber);
-                if (isWin)
-                {
-                    return answer;
-                }
+               var (isLast, answer) = game.MarkWinnerPart2(winningNumber);
+               if (isLast)
+               {
+                   return answer;
+               }
             }
 
             return 0;

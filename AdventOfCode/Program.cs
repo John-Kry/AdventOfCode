@@ -25,7 +25,7 @@ namespace AdventOfCode
                 runInput = true;
             }
 
-            if (args.Contains("-all"))
+            if (args.Contains("all"))
             {
                 for (var i = 0; i < 12; i++)
                 {

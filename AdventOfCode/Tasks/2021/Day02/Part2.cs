@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Tasks.Year2021.Day2
+namespace AdventOfCode.Tasks.Year2021.Day02
 {
-    public class Part1 : ITask<int>
+    public class Part2 : ITask<int>
     {
         public int Solution(string input)
         {
@@ -12,6 +12,7 @@ namespace AdventOfCode.Tasks.Year2021.Day2
 
             var x = 0;
             var depth = 0;
+            var aim = 0;
 
             foreach (var command in commands)
             {
@@ -24,12 +25,13 @@ namespace AdventOfCode.Tasks.Year2021.Day2
                 {
                     case "forward":
                         x += amount;
+                        depth += aim * amount;
                         break;
                     case "up":
-                        depth -= amount;
+                        aim -= amount;
                         break;
                     case "down":
-                        depth += amount;
+                        aim += amount;
                         break;
                     default:
                         throw new NotImplementedException();

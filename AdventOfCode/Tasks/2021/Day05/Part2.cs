@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Tasks.Year2021.Day5
+namespace AdventOfCode.Tasks.Year2021.Day05
 {
     public class Part2 : ITask<int>
     {

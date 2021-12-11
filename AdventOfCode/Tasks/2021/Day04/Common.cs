@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AdventOfCode.Tasks.Year2021.Day4
+namespace AdventOfCode.Tasks.Year2021.Day04
 {
     public class BingoSpace
     {
