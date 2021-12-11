@@ -9,7 +9,7 @@ namespace AdventOfCode
     class Program
     {
         private static int _year = 2021;
-        private static int _day = 10;
+        private static int _day = 11;
 
         static void Main(string[] args)
         {
@@ -37,6 +37,10 @@ namespace AdventOfCode
         private static void ExecutePart(Type taskType, bool isExample)
         {
             string fileName = isExample ? "example-input.txt" : "input.txt";
+            if (!ReadInputHelper.FileExists(_year, _day, fileName))
+            {
+                return;
+            }
             string input = ReadInputHelper.ReadTaskInput(_year, _day, fileName);
             object task = Activator.CreateInstance(taskType);
             MethodInfo solutionMethod1 = taskType.GetMethod("Part1");
