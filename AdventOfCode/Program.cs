@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using AdventOfCode.Helpers;
 
@@ -10,10 +11,37 @@ namespace AdventOfCode
     {
         private static string _year = "2021";
         private static string _day = "11";
-
+        private static bool runExample = false;
+        private static bool runInput = false;
         static void Main(string[] args)
         {
-            _day = DateTime.Now.Day.ToString("00");
+            if (args.Contains("example"))
+            {
+                runExample = true;
+            }
+
+            if (args.Contains("input"))
+            {
+                runInput = true;
+            }
+
+            if (args.Contains("-all"))
+            {
+                for (var i = 0; i < 12; i++)
+                {
+                    _day = i.ToString("00");
+                    ExecuteDay();
+                }
+            }
+            else
+            {
+                _day = DateTime.Now.Day.ToString("00");
+                ExecuteDay();
+            }
+        }
+
+        private static void ExecuteDay()
+        {
             if (ReadInputHelper.FileExists(_year, _day, "Solution.cs"))
             {
                 // new run part
@@ -30,8 +58,14 @@ namespace AdventOfCode
         private static void RunNewParts()
         {
             Type taskType = Type.GetType($"AdventOfCode.Tasks.Year{_year}.Day{_day}.Solution");
-            ExecutePart(taskType, true);
-            ExecutePart(taskType, false);
+            if (runExample)
+            {
+                ExecutePart(taskType, true);
+            }
+            if (runInput)
+            {
+                ExecutePart(taskType, false);
+            }
         }
 
         private static void ExecutePart(Type taskType, bool isExample)
@@ -41,6 +75,7 @@ namespace AdventOfCode
             {
                 return;
             }
+
             string input = ReadInputHelper.ReadTaskInput(_year, _day, fileName);
             object task = Activator.CreateInstance(taskType);
             MethodInfo solutionMethod1 = taskType.GetMethod("Part1");
@@ -50,7 +85,8 @@ namespace AdventOfCode
             RunAndLogPart(isExample, solutionMethod2, task, input, fileName);
         }
 
-        private static void RunAndLogPart(bool isExample, MethodInfo solutionMethod, object task, string input, string fileName)
+        private static void RunAndLogPart(bool isExample, MethodInfo solutionMethod, object task, string input,
+            string fileName)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
             var result = solutionMethod.Invoke(task, new object[] {input});
