@@ -120,17 +120,21 @@ namespace AdventOfCode.Tasks.Year2021.Day11
 
         private static void InitGrid(string[] lines, Octopus[,] grid)
         {
-            var y = 0;
-            foreach (var line in lines)
+            Helper.CreateTwoDArrayFromString(lines, (c) =>
             {
-                var x = 0;
-                foreach (var c in line)
-                {
-                    grid[x, y] = new Octopus {Energy = int.Parse(c.ToString()), HasFlashed = false};
-                    x++;
-                }
-                y++;
-            }
+                return new Octopus {Energy = int.Parse(c.ToString()), HasFlashed = false};
+            }, grid);
+            // var y = 0;
+            // foreach (var line in lines)
+            // {
+            //     var x = 0;
+            //     foreach (var c in line)
+            //     {
+            //         grid[x, y] = new Octopus {Energy = int.Parse(c.ToString()), HasFlashed = false};
+            //         x++;
+            //     }
+            //     y++;
+            // }
         }
 
         public long Part2(string input)

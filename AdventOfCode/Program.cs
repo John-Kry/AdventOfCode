@@ -35,7 +35,7 @@ namespace AdventOfCode
             }
             else
             {
-                _day = DateTime.Now.Day.ToString("00");
+                // _day = DateTime.Now.Day.ToString("00");
                 ExecuteDay();
             }
         }
@@ -72,7 +72,7 @@ namespace AdventOfCode
                 ExecutePart(taskType, false);
             }
 
-            if (!runExample && !runExample)
+            if (!runExample && !runInput)
             {
                 ExecutePart(taskType, true);
                 ExecutePart(taskType, false);
