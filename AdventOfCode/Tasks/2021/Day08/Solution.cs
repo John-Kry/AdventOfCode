@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualBasic;
 
-namespace AdventOfCode.Tasks.Year2021.Day8
+namespace AdventOfCode.Tasks.Year2021.Day08
 {
     public class Solution : Solvable
     {

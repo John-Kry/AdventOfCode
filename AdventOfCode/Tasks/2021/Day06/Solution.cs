@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Tasks.Year2021.Day6
+namespace AdventOfCode.Tasks.Year2021.Day06
 {
     public class Solution : Solvable
     {

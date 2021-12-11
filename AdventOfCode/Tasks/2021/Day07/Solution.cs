@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Tasks.Year2021.Day7
+namespace AdventOfCode.Tasks.Year2021.Day07
 {
     public class Solution : Solvable
     {

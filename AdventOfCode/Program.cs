@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -13,6 +12,7 @@ namespace AdventOfCode
         private static string _day = "11";
         private static bool runExample = false;
         private static bool runInput = false;
+
         static void Main(string[] args)
         {
             if (args.Contains("example"))
@@ -27,7 +27,7 @@ namespace AdventOfCode
 
             if (args.Contains("all"))
             {
-                for (var i = 0; i < 12; i++)
+                for (var i = 1; i < 12; i++)
                 {
                     _day = i.ToString("00");
                     ExecuteDay();
@@ -47,7 +47,6 @@ namespace AdventOfCode
                 // new run part
                 RunNewParts();
             }
-
             else
             {
                 RunPart(1);
@@ -58,12 +57,24 @@ namespace AdventOfCode
         private static void RunNewParts()
         {
             Type taskType = Type.GetType($"AdventOfCode.Tasks.Year{_year}.Day{_day}.Solution");
+            if (taskType == null)
+            {
+                Console.WriteLine("GPOG");
+            }
+
             if (runExample)
             {
                 ExecutePart(taskType, true);
             }
+
             if (runInput)
             {
+                ExecutePart(taskType, false);
+            }
+
+            if (!runExample && !runExample)
+            {
+                ExecutePart(taskType, true);
                 ExecutePart(taskType, false);
             }
         }
@@ -109,10 +120,10 @@ namespace AdventOfCode
 
         private static void RunPart(int part)
         {
-            Type taskType = Type.GetType($"AdventOfCode.Tasks._Year{_year}._Day{_day}.Part{part}");
+            Type taskType = Type.GetType($"AdventOfCode.Tasks.Year{_year}.Day{_day}.Part{part}");
             if (taskType is null)
             {
-                Console.WriteLine($"Task with _year: {_year}, _day: {_day} and part: {part} doesn't exist.");
+                Console.WriteLine($"Task with year: {_year}, day: {_day} and part: {part} doesn't exist.");
                 return;
             }
 
