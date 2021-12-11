@@ -33,36 +33,46 @@ namespace AdventOfCode.Tasks.Year2021.Day11
             for (var step = 0; step < stepMax; step++)
             {
                 //step 1
-                for (var x = 0; x < grid.GetLength(0); x++)
-                {
-                    for (var y = 0; y < grid.GetLength(1); y++)
-                    {
-                        grid[x, y].Energy += 1;
-                    }
-                }
+                // for (var x = 0; x < grid.GetLength(0); x++)
+                // {
+                //     for (var y = 0; y < grid.GetLength(1); y++)
+                //     {
+                //         grid[x, y].Energy += 1;
+                //     }
+                // }
+                grid.ForEachItem((x,y)=> grid[x,y].Energy +=1);
 
+                grid.ForEachItem((x,y)=> ExecuteFlashIfNeeded(grid,x,y));
                 //step 2
-                for (var x = 0; x < grid.GetLength(0); x++)
-                {
-                    for (var y = 0; y < grid.GetLength(1); y++)
-                    {
-                        ExecuteFlashIfNeeded(grid, x, y);
-                    }
-                }
+                // for (var x = 0; x < grid.GetLength(0); x++)
+                // {
+                //     for (var y = 0; y < grid.GetLength(1); y++)
+                //     {
+                //         ExecuteFlashIfNeeded(grid, x, y);
+                //     }
+                // }
 
                 var allFlashed = true;
                 // Clear for next round
-                for (var x = 0; x < grid.GetLength(0); x++)
+                // for (var x = 0; x < grid.GetLength(0); x++)
+                // {
+                //     for (var y = 0; y < grid.GetLength(1); y++)
+                //     {
+                //         if (!grid[x, y].HasFlashed)
+                //         {
+                //             allFlashed = false;
+                //         }
+                //         grid[x, y].HasFlashed = false;
+                //     }
+                // }
+                grid.ForEachItem((x, y) =>
                 {
-                    for (var y = 0; y < grid.GetLength(1); y++)
+                    if (!grid[x, y].HasFlashed)
                     {
-                        if (!grid[x, y].HasFlashed)
-                        {
-                            allFlashed = false;
-                        }
-                        grid[x, y].HasFlashed = false;
+                        allFlashed = false;
                     }
-                }
+                    grid[x, y].HasFlashed = false; 
+                });
 
                 if (findAllFlashStep && allFlashed) return step;
             }
@@ -98,7 +108,7 @@ namespace AdventOfCode.Tasks.Year2021.Day11
             }
         }
 
-        public class Octopus
+        private class Octopus
         {
             public int Energy;
             public bool HasFlashed;
