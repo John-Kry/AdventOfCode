@@ -5,7 +5,7 @@ namespace AdventOfCode.Helpers
 {
     static class ReadInputHelper
     {
-        public static string ReadTaskInput(int year, int day, string fileName)
+        public static string ReadTaskInput(string year, string day, string fileName)
         {
             var projectRoot = GetProjectRoot();
 
@@ -14,7 +14,7 @@ namespace AdventOfCode.Helpers
             return input;
         }
 
-        public static bool FileExists(int year, int day, string fileName)
+        public static bool FileExists(string year, string day, string fileName)
         {
            return File.Exists(Path.Combine(GetProjectRoot(), $"Tasks/{year}/Day{day}/{fileName}"));
         }

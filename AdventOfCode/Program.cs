@@ -8,12 +8,12 @@ namespace AdventOfCode
 {
     class Program
     {
-        private static int _year = 2021;
-        private static int _day = 11;
+        private static string _year = "2021";
+        private static string _day = "11";
 
         static void Main(string[] args)
         {
-            // var _day = DateTime.Now._Day;
+            _day = DateTime.Now.Day.ToString("00");
             if (ReadInputHelper.FileExists(_year, _day, "Solution.cs"))
             {
                 // new run part
@@ -22,8 +22,8 @@ namespace AdventOfCode
 
             else
             {
-                RunPart(_year, _day, 1);
-                RunPart(_year, _day, 2);
+                RunPart(1);
+                RunPart(2);
             }
         }
 
@@ -71,7 +71,7 @@ namespace AdventOfCode
         }
 
 
-        private static void RunPart(int _year, int _day, int part)
+        private static void RunPart(int part)
         {
             Type taskType = Type.GetType($"AdventOfCode.Tasks._Year{_year}._Day{_day}.Part{part}");
             if (taskType is null)

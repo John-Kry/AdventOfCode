@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Tasks.Year2021.Day1
+namespace AdventOfCode.Tasks.Year2021.Day01
 {
-    public class Part2 : ITask<int>
+    public class Part1 : ITask<int>
     {
         public int Solution(string input)
         {
             var numbers = input.Split("\n").Select(int.Parse).ToList();
-            var previous = numbers[0] + numbers[1] + numbers[2];
+            var previous = numbers[0];
             var increasedCount = 0;
             var decreasedCount = 0;
-            for(var i = 1; i <numbers.Count - 2; i++)
+            for(var i = 1; i <numbers.Count; i++)
             {
-                var sum = numbers[i] + numbers[i + 1] + numbers[i + 2];
-                if (sum > previous)
+                if (numbers[i] > previous)
                 {
                     increasedCount++;
                 }
@@ -24,7 +23,7 @@ namespace AdventOfCode.Tasks.Year2021.Day1
                     decreasedCount++;
                 }
 
-                previous = sum;
+                previous = numbers[i];
             }
 
 
