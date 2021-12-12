@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AdventOfCode.Tasks._2021;
 
 namespace AdventOfCode.Tasks.Year2021.Day09
 {
@@ -19,25 +20,16 @@ namespace AdventOfCode.Tasks.Year2021.Day09
         {
             var heightMap = new Point[lines[0].Length, lines.Length];
 
-            var y = 0;
-            foreach (var line in lines)
+            Helper.CreateTwoDArrayFromString(lines, (c, x, y) =>
             {
-                var x = 0;
-                foreach (var height in line)
+                return new Point
                 {
-                    heightMap[x, y] = new Point
-                    {
-                        seen = false,
-                        value = int.Parse(height.ToString()),
-                        x = x,
-                        y = y
-                    };
-                    x++;
-                }
-
-                y++;
-            }
-
+                    seen = false,
+                    value = int.Parse(c.ToString()),
+                    x = x,
+                    y = y
+                };
+            }, heightMap);
             return heightMap;
         }
 
@@ -45,18 +37,14 @@ namespace AdventOfCode.Tasks.Year2021.Day09
         private List<Point> FindLowPoints(Point[,] heightMap)
         {
             var lowPoints = new List<Point>();
-            for (var y = 0; y < heightMap.GetLength(1); y++)
+            heightMap.ForEachItem((x, y) =>
             {
-                for (var x = 0; x < heightMap.GetLength(0); x++)
+                var lowPoint = GetLowPoint(x, y, heightMap);
+                if (lowPoint != null)
                 {
-                    var lowPoint = GetLowPoint(x, y, heightMap);
-                    if (lowPoint != null)
-                    {
-                        lowPoints.Add(lowPoint);
-                    }
+                    lowPoints.Add(lowPoint);
                 }
-            }
-
+            });
             return lowPoints;
         }
 
@@ -131,6 +119,7 @@ namespace AdventOfCode.Tasks.Year2021.Day09
                     {
                         continue;
                     }
+
                     if (heightMap[tempX, tempY].value != 9)
                     {
                         queue.Enqueue(heightMap[tempX, tempY]);
@@ -142,29 +131,29 @@ namespace AdventOfCode.Tasks.Year2021.Day09
         }
 
         private Point GetLowPoint(int x, int y, Point[,] heightMap)
-            {
-                var target = heightMap[x, y];
-                var points = new List<int>();
-
-                //left
-                points.Add(GetPoint(x - 1, y, heightMap));
-                //right
-                points.Add(GetPoint(x + 1, y, heightMap));
-                //up
-                points.Add(GetPoint(x, y - 1, heightMap));
-                //down 
-                points.Add(GetPoint(x, y + 1, heightMap));
-                var count = points.Count(item => target.value < item);
-                if (count == 4) return heightMap[x, y];
-                return null;
-            }
-        }
-
-        class Point
         {
-            public bool seen;
-            public int value;
-            public int x;
-            public int y;
+            var target = heightMap[x, y];
+            var points = new List<int>();
+
+            //left
+            points.Add(GetPoint(x - 1, y, heightMap));
+            //right
+            points.Add(GetPoint(x + 1, y, heightMap));
+            //up
+            points.Add(GetPoint(x, y - 1, heightMap));
+            //down 
+            points.Add(GetPoint(x, y + 1, heightMap));
+            var count = points.Count(item => target.value < item);
+            if (count == 4) return heightMap[x, y];
+            return null;
         }
     }
+
+    class Point
+    {
+        public bool seen;
+        public int value;
+        public int x;
+        public int y;
+    }
+}

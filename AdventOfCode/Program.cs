@@ -9,7 +9,7 @@ namespace AdventOfCode
     class Program
     {
         private static string _year = "2021";
-        private static string _day = "12";
+        private static string _day = "09";
         private static bool runExample = false;
         private static bool runInput = false;
 

@@ -10,53 +10,61 @@ namespace AdventOfCode.Tasks.Year2015.Day07
     {
         public long Part1(string input)
         {
-            var registers = new Dictionary<char, long>();
-            var items = new char  ['d', 'e', 'f', 'g', 'h', 'i', 'x', 'y'];
-            foreach (var c in items)
-            {
-                registers.TryAdd(c, 0);
-            }
+            var registers = new Dictionary<string, short>();
             var lines = input.Split("\n");
             foreach (var line in lines)
             {
-                // var regex = new Regex(@"^\d+ -> .");
-                // var match = regex.Matches(line);
-
+                // 123 -> x;
                 if (Regex.Match(line, @"^\d+ -> .").Success)
                 {
-                    Console.WriteLine(line);
+                    var number = Int16.Parse(Regex.Match(line, @"^\d+").Value);
+                    SaveIntoRegister(registers, line, number);
                 }
 
                 if (Regex.Match(line, "AND").Success)
                 {
-                    Console.WriteLine(line);
+                    var matches = Regex.Matches(line, @"[a-z]+");
+                    var number = registers[matches[0].Value] & registers[matches[1].Value];
+                    SaveIntoRegister(registers, line, number);
                 }
 
                 if (Regex.Match(line, "OR").Success)
                 {
-                    Console.WriteLine(line);
+                    var matches = Regex.Matches(line, @"[a-z]+");
+                    var number = registers[matches[0].Value] | registers[matches[1].Value];
+                    SaveIntoRegister(registers, line, number);
                 }
 
                 if (Regex.Match(line, "LSHIFT").Success)
                 {
-                    Console.WriteLine(line);
+                    var matches = Regex.Matches(line, @"[a-z]+");
+                    var number = registers[matches[0].Value] << Int16.Parse(Regex.Match(line, @"\d+").Value);
+                    SaveIntoRegister(registers, line, number);
                 }
 
                 if (Regex.Match(line, "RSHIFT").Success)
                 {
-                    Console.WriteLine(line);
+                    var matches = Regex.Matches(line, @"[a-z]+");
+                    var number = registers[matches[0].Value] >> Int16.Parse(Regex.Match(line, @"\d+").Value);
+                    SaveIntoRegister(registers, line, number);
                 }
-                
+
                 if (Regex.Match(line, "NOT").Success)
                 {
-                    Console.WriteLine(line);
+                    var matches = Regex.Matches(line, @"[a-z]+");
+                    int number = ~registers[matches[0].Value];
+                    SaveIntoRegister(registers, line, number);
                 }
-                // var 
             }
+            Console.WriteLine(registers["a"]);
 
             return 0;
         }
 
+        private static void SaveIntoRegister(Dictionary<string, short> registers, string line, int number)
+        {
+            registers[Regex.Match(line, @"\w+$").Value] = (short)number;
+        }
 
 
         public long Part2(string input)
