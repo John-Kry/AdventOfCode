@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AdventOfCode.Tasks.Year2021.Day11;
 
 namespace AdventOfCode.Tasks._2021
@@ -43,5 +44,13 @@ namespace AdventOfCode.Tasks._2021
                 y++;
             }
         }
+
+        public static void UpdateDict(this Dictionary<char, long> dict, char c, long newVal)
+        {
+            dict.TryGetValue(c, out var val);
+            dict.Remove(c);
+            dict.Add(c, newVal);
+        }
+
     }
 }
