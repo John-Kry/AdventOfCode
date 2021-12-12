@@ -118,23 +118,22 @@ namespace AdventOfCode.Tasks.Year2021.Day12
             var currentVertex = GetVertexByName(startVertexName);
             pathSoFar.Add(currentVertex._name);
             
-            var localVisited = new Dictionary<string, int>(visited);
             if (currentVertex._name == endVertexName)
             {
                 paths.Add(pathSoFar);
             }
             else
             {
-                localVisited.TryGetValue(currentVertex._name, out var isVisited);
+                visited.TryGetValue(currentVertex._name, out var isVisited);
                 if (!currentVertex._isSmallCave || (
                         currentVertex._isSmallCave && isVisited==0) ||
                     currentVertex._isSmallCave && isVisited==1 && specialCaveName == currentVertex._name)
                 {
-                    localVisited[currentVertex._name] = isVisited + 1;
+                    visited[currentVertex._name] = isVisited + 1;
                     foreach (var vertex in currentVertex._edges)
                     {
                         DFS(vertex, endVertexName, new List<string>(pathSoFar),
-                            new Dictionary<string, int>(localVisited), specialCaveName);
+                            new Dictionary<string, int>(visited), specialCaveName);
                     }
                 }
             }
