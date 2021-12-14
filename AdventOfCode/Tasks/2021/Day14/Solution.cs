@@ -68,8 +68,8 @@ namespace AdventOfCode.Tasks.Year2021.Day14
                 letterCount[kvp.Key[0]] = letterCount.GetValueOrDefault(kvp.Key[0]) + kvp.Value;
                 letterCount[kvp.Key[1]] = letterCount.GetValueOrDefault(kvp.Key[1]) + kvp.Value;
             }
-            letterCount[parts[1][0]]++;
-            letterCount[parts[1].Last()]++;
+            letterCount[parts[0][0]]++;
+            letterCount[parts[0].Last()]++;
 
             return (letterCount.Values.Max() - letterCount.Values.Min()) / 2;
         }
