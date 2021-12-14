@@ -12,7 +12,14 @@ namespace AdventOfCode.Tasks._2021
             {
                 for (var x = 0; x < heightMap.GetLength(0); x++)
                 {
-                    Console.Write(heightMap[x, y]);
+                    if (heightMap[x, y] == null)
+                    {
+                        Console.Write(" ");
+                    }
+                    else
+                    {
+                        Console.Write(heightMap[x, y]);
+                    }
                 }
 
                 Console.WriteLine();

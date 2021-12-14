@@ -9,7 +9,7 @@ namespace AdventOfCode
     class Program
     {
         private static string _year = "2021";
-        private static string _day = "09";
+        private static string _day = "13";
         private static bool runExample = false;
         private static bool runInput = false;
 
@@ -35,7 +35,7 @@ namespace AdventOfCode
             }
             else
             {
-                // _day = DateTime.Now.Day.ToString("00");
+                _day = DateTime.Now.Day.ToString("00");
                 ExecuteDay();
             }
         }
