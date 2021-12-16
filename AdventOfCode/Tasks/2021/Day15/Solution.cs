@@ -23,49 +23,67 @@ namespace AdventOfCode.Tasks.Year2021.Day15
             var rr = new int[] {0, 1, 0, -1};
             var cc = new int[] {1, 0, -1, 0};
             var pathCost = new Dictionary<(int, int), long>();
-            var queue = new Queue<(int, int)>();
+            var queue = new PriorityQueue<(long, int, int), long>();
             var grid = GetGrid(input, queue, pathCost, duplicateBy5);
+            var visited = new HashSet<(int, int)>();
             var source = (0, 0);
             var destination = (grid.GetLength(0) - 1, grid.GetLength(1) - 1);
             pathCost[source] = 0;
-            while (queue.Count >0)
+            queue.Enqueue((0, 0, 0), 0);
+            while (queue.Count > 0)
             {
-                // var u = pathCost.Min().Key;
-                var u = queue.Dequeue();
+                var (dist, x, y) = queue.Dequeue();
+                
+                if (x < 0 || x > grid.GetLength(0) - 1 || y < 0 || y > grid.GetLength(1) - 1)
+                {
+                    continue;
+                }
+
+                var localVertex = (x, y);
+                var totalCost = dist + grid[x, y];
+
+                if (!visited.Contains(localVertex) || totalCost < pathCost[localVertex])
+                {
+                    // this path is better
+                    pathCost[localVertex] = totalCost;
+                    visited.Add(localVertex);
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (destination == localVertex)
+                {
+                    break;
+                }
+
+
                 for (var i = 0; i < rr.Length; i++)
                 {
-                    var (x, y) = u;
-                    y += cc[i];
-                    x += rr[i];
-                    if (!queue.Contains((x, y)))
-                    {
-                        continue;
-                    }
-
-                    var localVertex = (x, y);
-                    var alt = pathCost[u] + grid[x, y];
-                    if (alt < pathCost[localVertex])
-                    {
-                        pathCost[localVertex] = alt;
-                    }
+                    var (xx, yy) = (x, y);
+                    yy += cc[i];
+                    xx += rr[i];
+                    
+                    queue.Enqueue((pathCost[localVertex], xx, yy), pathCost[localVertex]);
                 }
             }
 
-            return pathCost[destination] - grid[source.Item1, source.Item2] + 1;
+            return pathCost[destination] - grid[source.Item1, source.Item2];
         }
 
-        private long[,] GetGrid(string input, Queue<(int,int)> queue, Dictionary<(int, int), long> pathCost, bool duplicateBy5)
+        private long[,] GetGrid(string input, PriorityQueue<(long, int, int), long> queue, Dictionary<(int, int), long> pathCost,
+            bool duplicateBy5)
         {
-           
             var lines = input.Split("\n");
             var gridStart = new long[lines[0].Length, lines.Length];
-            
+
             Helper.CreateTwoDArrayFromString(lines, (c, x, y) => { return long.Parse(c.ToString()); }, gridStart);
             // gridStart.Print();
             long[,] grid;
             if (duplicateBy5)
             {
-                grid = new long[lines[0].Length * 5, lines.Length * 5]; 
+                grid = new long[lines[0].Length * 5, lines.Length * 5];
                 var width = lines[0].Length;
                 gridStart.ForEachItem((x, y) =>
                 {
@@ -82,13 +100,9 @@ namespace AdventOfCode.Tasks.Year2021.Day15
             {
                 grid = gridStart;
             }
-            
-            grid.ForEachItem((x, y) =>
-            {
-                pathCost[(x, y)] = long.MaxValue;
-                queue.Enqueue((x, y));
-            });
-            
+
+            grid.ForEachItem((x, y) => { pathCost[(x, y)] = long.MaxValue; });
+
             return grid;
         }
 
